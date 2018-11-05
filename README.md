@@ -5,7 +5,11 @@
 Sous Windows 10, se procurer la VM légère Ubuntu bash (une invite de commande Linux fonctionnant sous Windows). Elle est disponible depuis le menu **Paramètres -> Mise à jour et sécurité** et dans le menu "**Pour les développeurs**" , cocher le bouton "**Mode développeur**".
 Taper « **fonctionnalités** » dans la barre de recherche et cliquer sur "**Activer ou désactiver des fonctionnalités Windows**" .
 Cocher la case « _**Sous-système Windows pour Linux**_ » et faire OK.  L'ordinateur devra ensuite redémarrer.
+Eventuellement configurer l'environnement (je ne sais plus si c'est nécessaire) via la nouvelle application "Ubuntu".
+
 Pour ensuite accéder au shell Ubuntu, utiliser la commande `bash`depuis un invite de commandes.
+
+Plus d'info sur https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/
 
 Remarque : l'arborescence de fichiers Windows est accessible depuis le bash, aux chemins d'accès `/mnt/c` pour le lecteur C, `/mnt/d` pour le D, etc.
 ## 2. Installation des paquets nécessaires à Spark
