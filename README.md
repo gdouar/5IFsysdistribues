@@ -14,28 +14,28 @@ Plus d'info sur https://www.howtogeek.com/249966/how-to-install-and-use-the-linu
 Remarque : l'arborescence de fichiers Windows est accessible depuis le bash, aux chemins d'accès `/mnt/c` pour le lecteur C, `/mnt/d` pour le D, etc.
 ## 2. Installation des paquets nécessaires à Spark
 Télécharger Java, Python et Git sur la VM depuis le bash : 
-`sudo apt-get install java`
-`sudo apt-get install python`
-`sudo apt-get install git`
+`sudo apt-get install java`\
+`sudo apt-get install python`\
+`sudo apt-get install git`\
 
 En cas d'erreur de dépendances de paquets, quelques commandes utiles : 
 `sudo apt-get update --fix-missing`
 `sudo apt-get upgrade`
 ## Mise en place du repository Git
-Créer un dossier pour le projet puis y accéder et lancer les commandes Git pour initialiser le repository.
-`git init`
-`git clone https://github.com/gdouar/5IFsysdistribues `
+Créer un dossier pour le projet puis y accéder et lancer les commandes Git pour initialiser le repository.\
+`git init`\
+`git clone https://github.com/gdouar/5IFsysdistribues `\
 puis `git pull`.
 
 ## Installation de Spark
 Toujours depuis la VM, installer Spark et SBT (pour compiler des programmes Scala).
 ### Spark
 Le lien :  https://spark.apache.org/downloads.html
-Installer la dernière version. Pour cela télécharger l'archive TAR de Spark dans le dossier du projet.
-A. Dézipper l'archive ainsi depuis le bash : `tar xvf <nom_archive>` (ou depuis Winrar ou autre logiciel)
-B. Accéder à ce dossier (`cd nom_archive`) puis lancer les commandes :
+Installer la dernière version. Pour cela télécharger l'archive TAR de Spark dans le dossier du projet.\
+A. Dézipper l'archive ainsi depuis le bash : `tar xvf <nom_archive>` (ou depuis Winrar ou autre logiciel)\
+B. Accéder à ce dossier (`cd nom_archive`) puis lancer les commandes :\
 `mkdir /usr/local/spark` puis 
- `sudo mv ./* /usr/local/spark` pour bouger tout son contenu dans un dossier fixe. 
+ `sudo mv ./* /usr/local/spark` pour bouger tout son contenu dans un dossier fixe. \
 C. Enfin lancer la commande `sudo nano ~/.bashrc` pour ajouter le dossier des commandes binaires de Spark  dans le script de chargement de la console (pour pouvoir les utiliser depuis n'importe où). Pour cela, descendre tout en bas du fichier et ajouter la ligne `export PATH=$PATH:/usr/local/spark/bin` à la fin. Sauvegarder le tout en faisant Ctrl+X, puis Y et Entrée, et ré exécuter le script via la commande `source  ~/.bashrc `.
 
 ### SBT
@@ -43,10 +43,10 @@ Effectuer exactement les mêmes étapes que le point précédent, en remplaçant
 
 ### Vérifier que tout est bien installé
 Pour vérifier les différentes installations, tester les commandes suivantes depuis le dossier du projet : 
-`java -version`
-`python -v`
-`sbt sbtVersion`
-`spark-shell`
+`java -version`\
+`python -v`\
+`sbt sbtVersion`\
+`spark-shell`\
 
 # Prise en main du projet
 
