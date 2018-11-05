@@ -1,1 +1,1 @@
-sbt package && /usr/local/spark/bin/spark-submit --class "SimpleApp" --master local[4] target/scala-2.10/simple-project_2.10-1.0.jar
+sbt package && /usr/local/spark/bin/spark-submit --class "SimpleApp" --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=custom-log4j.properties"sbt  --master local[4] target/scala-2.10/simple-project_2.10-1.0.jar
