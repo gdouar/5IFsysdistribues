@@ -1,4 +1,5 @@
 import algorithm.SparkAlgorithmMeasure;
+import algorithm.clustering.KMeansClustering;
 import algorithm.wordcount.WordCount;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -13,7 +14,7 @@ public class Main {
         // Create a Java version of the Spark Context
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");                // limitation du niveau de log
-        SparkAlgorithmMeasure algo = new WordCount(sc);
+        SparkAlgorithmMeasure algo = new KMeansClustering(sc);
         // Load the text into a Spark RDD, which is a distributed representation of each line of text
         try {
             System.out.println("Average time : " + algo.execute() + " ms.");

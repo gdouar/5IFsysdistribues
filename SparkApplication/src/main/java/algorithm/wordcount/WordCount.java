@@ -8,7 +8,7 @@ import scala.Tuple2;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-
+/** Évaluation d'une fonctionnalité basique Spark*/
 public class WordCount extends SparkAlgorithmMeasure {
 
     public WordCount(JavaSparkContext sc) {

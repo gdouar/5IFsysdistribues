@@ -1,6 +1,9 @@
 package algorithm.regression;
 import algorithm.*;
 import org.apache.spark.api.java.JavaSparkContext;
+import scala.Tuple2;
+
+import java.util.Arrays;
 
 public class LogisticRegression extends SparkAlgorithmMeasure {
 
@@ -10,7 +13,10 @@ public class LogisticRegression extends SparkAlgorithmMeasure {
 
     @Override
     protected void executeCore() {
-
+        /*result = this.getTextFile()
+                .flatMap(s -> Arrays.asList(s.split("[ ,]")).iterator())
+                .mapToPair(word -> new Tuple2<>(word, 1))
+                .reduceByKey((a, b) -> a + b);*/
     }
 
     @Override
@@ -20,7 +26,7 @@ public class LogisticRegression extends SparkAlgorithmMeasure {
 
     @Override
     public String datasetFileName() {
-        return null;
+        return "src/main/resources/adult.data";
     }
 
     @Override
