@@ -61,5 +61,7 @@ Le niveau de logging sur Spark est par défaut très élevé (INFO). Pour limite
 
 `sudo nano /usr/local/spark/log4j.properties` : remplacer dans ce nouveau fichier la ligne `log4j.rootCategory=INFO`, par  `log4j.rootCategory=ERROR`, puis Ctrl+X et Y pour sauvegarder.
 
+## Java
 
+Tutoriel suivi pour développement java : https://fr.hortonworks.com/tutorial/setting-up-a-spark-development-environment-with-java/
 
