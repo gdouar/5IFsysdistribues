@@ -1,9 +1,7 @@
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.JavaRDD;
+import algorithm.SparkAlgorithmMeasure;
+import algorithm.wordcount.WordCount;
 import org.apache.spark.SparkConf;
-import scala.Tuple2;
-import java.util.Arrays;
+import org.apache.spark.api.java.JavaSparkContext;
 
 public class Main {
 
@@ -14,16 +12,16 @@ public class Main {
 
         // Create a Java version of the Spark Context
         JavaSparkContext sc = new JavaSparkContext(conf);
-
+        sc.setLogLevel("ERROR");                // limitation du niveau de log
+        SparkAlgorithmMeasure algo = new WordCount(sc);
         // Load the text into a Spark RDD, which is a distributed representation of each line of text
-        JavaRDD<String> textFile = sc.textFile("src/main/resources/shakespeare.txt");
-        JavaPairRDD<String, Integer> counts = textFile
-                .flatMap(s -> Arrays.asList(s.split("[ ,]")).iterator())
-                .mapToPair(word -> new Tuple2<>(word, 1))
-                .reduceByKey((a, b) -> a + b);
-        counts.foreach(p -> System.out.println(p));
-        System.out.println("Total words: " + counts.count());
-        counts.saveAsTextFile("tmp/shakespeareWordCount");
+        try {
+            System.out.println("Average time : " + algo.execute() + " ms.");
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+
     }
 
 }
