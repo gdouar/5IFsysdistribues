@@ -1,6 +1,6 @@
 import algorithm.SparkAlgorithmMeasure;
 import algorithm.clustering.KMeansClustering;
-import algorithm.wordcount.WordCount;
+//import algorithm.wordcount.WordCount;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 

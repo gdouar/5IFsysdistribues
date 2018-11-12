@@ -1,4 +1,4 @@
-package algorithm.wordcount;
+package algorithm.worddcount;
 import algorithm.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 /** Évaluation d'une fonctionnalité basique Spark*/
-public class WordCount extends SparkAlgorithmMeasure {
+public class WordCount extends algorithm.SparkAlgorithmMeasure {
 
     public WordCount(JavaSparkContext sc) {
         super(sc);
