@@ -10,7 +10,7 @@ import org.apache.spark.mllib.linalg.Vector;
  */
 public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     private Integer nbClusters = 10;
-    private Integer nbIterations = 5;
+    private Integer nbIterations = 10;
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
 
 
@@ -40,11 +40,6 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         }
    /*     double cost = this.kmeansClusters.computeCost(parsedData.rdd());
         System.out.println("Cost: " + cost); */
-    }
-
-    @Override
-    public String datasetFileName() {
-        return "src/main/resources/household_power_consumption_VerySmall.txt";
     }
 
     @Override
