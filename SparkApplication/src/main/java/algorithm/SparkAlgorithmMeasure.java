@@ -25,7 +25,7 @@ public abstract class SparkAlgorithmMeasure {
         System.out.println("Start = " + startTime);
         for(int i = 0;i<NB_ITER;i++) {
             executeCore();
-            //     printResults();
+           // printResults();
             //  persistResults();
         }
         long stopTime = System.currentTimeMillis();
