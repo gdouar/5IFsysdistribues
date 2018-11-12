@@ -1,1 +1,1 @@
-/usr/local/spark/bin/spark-submit --class "Main"  --master local[4] target/SparkTutorial-1.0-SNAPSHOT.jar
+/usr/local/spark/bin/spark-submit --class "Main"  --master local[4] ./SparkEvaluationProject-1.0-SNAPSHOT.jar
