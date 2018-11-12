@@ -1,5 +1,6 @@
 package algorithm;
 
+import conf.SparkAppConfig;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
@@ -9,11 +10,13 @@ import org.apache.spark.api.java.JavaSparkContext;
 public abstract class SparkAlgorithmMeasure {
     /** Le RDD du fichier */
     private JavaRDD<String> textFile;
-    public static Integer NB_ITER = 50;
+    private static Integer NB_ITER = 200;
     protected  JavaSparkContext jsc;
     public SparkAlgorithmMeasure(JavaSparkContext sc){
         this.jsc = sc;
-        this.textFile =  sc.textFile(datasetFileName());
+        String filePath = getDatasetFilePath();
+        System.out.println("FILE PATH = " + filePath);
+        this.textFile =  sc.textFile(filePath);
     }
 
     /**
@@ -25,7 +28,7 @@ public abstract class SparkAlgorithmMeasure {
         System.out.println("Start = " + startTime);
         for(int i = 0;i<NB_ITER;i++) {
             executeCore();
-           // printResults();
+          //  printResults();
             //  persistResults();
         }
         long stopTime = System.currentTimeMillis();
@@ -39,7 +42,13 @@ public abstract class SparkAlgorithmMeasure {
     /** Le dataset utilisé par l'algorithme*/
     public abstract String datasetFileName();
 
-    public JavaRDD<String> getTextFile() {
+    /** NOTE: tout fichier doit être référence dans l'appel à spark-submit */
+    private String getDatasetFilePath(){
+        return (SparkAppConfig.IS_PROD ? "./"+datasetFileName() : dataSetFilePath() + datasetFileName());
+    }
+    protected abstract String dataSetFilePath();
+
+    protected JavaRDD<String> getTextFile() {
         return textFile;
     }
 

@@ -26,7 +26,12 @@ public class LogisticRegression extends SparkAlgorithmMeasure {
 
     @Override
     public String datasetFileName() {
-        return "src/main/resources/adult.data";
+        return "adult.data";
+    }
+
+    @Override
+    protected String dataSetFilePath() {
+        return "src/main/resources/";
     }
 
     @Override

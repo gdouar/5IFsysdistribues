@@ -36,7 +36,12 @@ public class WordCount extends SparkAlgorithmMeasure {
 
     @Override
     public String datasetFileName() {
-        return "src/main/resources/shakespeare.txt";
+        return "shakespeare.txt";
+    }
+
+    @Override
+    protected String dataSetFilePath() {
+        return "src/main/resources/";
     }
 
     @Override
