@@ -3,6 +3,7 @@ package algorithm.clustering;
 import algorithm.SparkAlgorithmMeasure;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.mllib.feature.StandardScaler;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.linalg.Vectors;
 import org.joda.time.DateTime;
@@ -29,7 +30,8 @@ public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
             }
             return Vectors.dense(values);
         }).filter(vector -> vector.size() > 0);         // gestion des outliers
-        return parsedData;
+
+        return new StandardScaler(true,  true).fit(parsedData.rdd()).transform(parsedData);
     }
     @Override
     protected abstract void executeCore(double n);

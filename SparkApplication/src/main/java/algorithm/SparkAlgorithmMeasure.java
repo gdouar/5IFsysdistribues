@@ -10,7 +10,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 public abstract class SparkAlgorithmMeasure {
     /** Le RDD du fichier */
     private JavaRDD<String> textFile;
-    private Integer nbIter = 200;
+    private Integer nbIter;
     protected  JavaSparkContext jsc;
     public SparkAlgorithmMeasure(JavaSparkContext sc, Integer nbIter){
         this.jsc = sc;

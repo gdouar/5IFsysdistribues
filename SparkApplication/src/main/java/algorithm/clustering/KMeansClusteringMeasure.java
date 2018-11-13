@@ -32,8 +32,8 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         System.out.println("FILE PATH = " + datasetFileName());
 
     }
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters, Integer nbIterations, String datasetFileName){
-        this(sc, nbClusters);
+    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName){
+        this(sc, nbIter, nbClusters);
         this.nbIterations = nbIterations;
         this.dataSetFileName = datasetFileName;
         System.out.println("FILE PATH = " + datasetFileName());

@@ -1,12 +1,14 @@
 import algorithm.SparkAlgorithmMeasure;
-import algorithm.clustering.GaussianMixtureClusteringMeasure;
 import algorithm.clustering.KMeansClusteringMeasure;
-import algorithm.stats.PearsonCorrelationsMeasure;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-import java.util.ArrayList;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -18,33 +20,46 @@ public class Main {
         // Create a Java version of the Spark Context
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");                // limitation du niveau de log
-
-        ArrayList<Long> arrayExec = new ArrayList<>();
-        for(int i=1;i<=10;i++){
-            SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 100, 10, 10);
+        ArrayList<Pair<String,Pair<Integer, Long>>> arrayExec = new ArrayList<>();
+        String files[] = {"household_power_consumption_VerySmall.txt" };/*, "household_power_consumption_small.txt"};  , "household_power_consumption_medium.txt",
+                             "household_power_consumption_big.txt", "household_power_consumption_very_big.txt"}; */
+        for(int j=0;j<files.length;j++) {
+            for (int i = 1; i <= 10; i++) {
+                SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10, 10, files[j]);
+                try {
+                    Double percentage = (double) i / 10;
+                    Long executionTimeMs = algo.execute(percentage);
+                    arrayExec.add(new MutablePair<>(files[j], new MutablePair<>(i * 10, executionTimeMs)));
+                    System.out.println("Average time for " + (double) i * 10 + "% of dataset " + files[j] + ": " + executionTimeMs + " ms.");
+                } catch (Exception ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        }
+        // save performance results
+        HashMap<String, String> fileContents = new HashMap<>();
+        for(int j=0;j<arrayExec.size();j++) {
+            String toSave="";
+            Pair<Integer, Long> pair = arrayExec.get(j).getValue();
+            toSave += pair.getKey() + "," + pair.getValue();
+            toSave += "\n";
+            if(fileContents.containsKey(arrayExec.get(j).getKey())){
+                fileContents.put(arrayExec.get(j).getKey(), fileContents.get(arrayExec.get(j).getKey()) + toSave);
+            }
+            else {
+                fileContents.put(arrayExec.get(j).getKey(), toSave);
+            }
+        }
+        for(String file : fileContents.keySet()){
             try {
-                Long executionTimeMs = algo.execute((double)i/10);
-                arrayExec.add(executionTimeMs);
-                System.out.println("Average time for " + (double)i/10 + "% of dataset : " + executionTimeMs+ " ms.");
+                PrintWriter out = new PrintWriter("results-" + file + ".csv");
+                out.print(fileContents.get(file));
+                out.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-            catch(Exception ex){
-                System.err.println(ex.getMessage());
-            }
-        }
-   /*     try {
-            SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 5);
-            Long executionTimeMs = algo.execute();
-            arrayExec.add(executionTimeMs);
-            System.out.println("Average time : " + executionTimeMs+ " ms.");
-            System.out.println("Average time : " + algo.execute() + " ms.");
-        }
-        catch(Exception ex){
-            System.err.println(ex.getMessage());
-                } */
-        //System.out.println
-
 
         }
-
+        }
 
 }

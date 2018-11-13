@@ -13,10 +13,7 @@ public class LinearRegressionMeasure extends SparkAlgorithmMeasure {
 
     @Override
     protected void executeCore(double n) {
-        /*result = this.getTextFile()
-                .flatMap(s -> Arrays.asList(s.split("[ ,]")).iterator())
-                .mapToPair(word -> new Tuple2<>(word, 1))
-                .reduceByKey((a, b) -> a + b);*/
+
     }
 
     @Override
