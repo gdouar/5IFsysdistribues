@@ -21,13 +21,11 @@ public class Main {
 
         ArrayList<Long> arrayExec = new ArrayList<>();
         for(int i=1;i<=10;i++){
-            SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
-        } */
+            SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 100, 10, 10);
             try {
                 Long executionTimeMs = algo.execute((double)i/10);
-
                 arrayExec.add(executionTimeMs);
-                System.out.println("Average time : " + executionTimeMs+ " ms.");
+                System.out.println("Average time for " + (double)i/10 + "% of dataset : " + executionTimeMs+ " ms.");
             }
             catch(Exception ex){
                 System.err.println(ex.getMessage());

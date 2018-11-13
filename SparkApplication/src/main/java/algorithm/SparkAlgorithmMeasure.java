@@ -10,10 +10,11 @@ import org.apache.spark.api.java.JavaSparkContext;
 public abstract class SparkAlgorithmMeasure {
     /** Le RDD du fichier */
     private JavaRDD<String> textFile;
-    private static Integer NB_ITER = 200;
+    private Integer nbIter = 200;
     protected  JavaSparkContext jsc;
-    public SparkAlgorithmMeasure(JavaSparkContext sc){
+    public SparkAlgorithmMeasure(JavaSparkContext sc, Integer nbIter){
         this.jsc = sc;
+        this.nbIter = nbIter;
         String filePath = getDatasetFilePath();
         this.textFile =  sc.textFile(filePath);
 }
@@ -27,14 +28,14 @@ public abstract class SparkAlgorithmMeasure {
     public Long execute(double n) throws Exception {
         long startTime = System.currentTimeMillis();
         System.out.println("Start = " + startTime);
-        for(int i = 0;i<NB_ITER;i++) {
+        for(int i = 0;i<nbIter;i++) {
             executeCore(n);
            // printResults();
             //  persistResults();
         }
         long stopTime = System.currentTimeMillis();
         System.out.println("Stop = " + stopTime);
-        return (stopTime - startTime) / NB_ITER;
+        return (stopTime - startTime) / nbIter;
     }
 
     protected abstract void executeCore(double n);

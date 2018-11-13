@@ -11,8 +11,8 @@ import org.joda.time.format.DateTimeFormat;
 import java.util.Date;
 
 public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
-    public ClusteringAlgorithmMeasure(JavaSparkContext sc) {
-        super(sc);
+    public ClusteringAlgorithmMeasure(JavaSparkContext sc, Integer nbIter) {
+        super(sc,nbIter);
     }
 
     protected JavaRDD<Vector> getParsedData(){
@@ -44,7 +44,7 @@ public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
 
     @Override
     public String datasetFileName() {
-        return "household_power_consumption_VerySmall.txt";
+        return "household_power_consumption_small.txt";
     }
 
     @Override

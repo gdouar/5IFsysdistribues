@@ -5,18 +5,15 @@ import scala.Tuple2;
 
 import java.util.Arrays;
 
-public class LinearRegressionMeasure extends SparkAlgorithmMeasure {
+public class SVMPrediction extends SparkAlgorithmMeasure {
 
-    public LinearRegressionMeasure(JavaSparkContext sc,Integer nbIter) {
+    public SVMPrediction(JavaSparkContext sc, Integer nbIter) {
         super(sc, nbIter);
     }
 
     @Override
     protected void executeCore(double n) {
-        /*result = this.getTextFile()
-                .flatMap(s -> Arrays.asList(s.split("[ ,]")).iterator())
-                .mapToPair(word -> new Tuple2<>(word, 1))
-                .reduceByKey((a, b) -> a + b);*/
+
     }
 
     @Override

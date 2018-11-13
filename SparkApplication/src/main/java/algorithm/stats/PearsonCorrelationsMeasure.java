@@ -14,8 +14,8 @@ public class PearsonCorrelationsMeasure extends SparkAlgorithmMeasure{
     private Integer col1;
     private Integer col2;
 
-    public PearsonCorrelationsMeasure(JavaSparkContext sc, Integer col1, Integer col2) {
-        super(sc);
+    public PearsonCorrelationsMeasure(JavaSparkContext sc, Integer nbIter, Integer col1, Integer col2) {
+        super(sc, nbIter);
         this.col1 = col1;
         this.col2 = col2;
     }
@@ -30,7 +30,7 @@ public class PearsonCorrelationsMeasure extends SparkAlgorithmMeasure{
     }
 
     @Override
-    protected void executeCore() {
+    protected void executeCore(double n) {
       JavaDoubleRDD rdd = getColData(this.col1);
       JavaDoubleRDD rdd2 = getColData(this.col2);
       this.correlation = Statistics.corr(rdd.srdd(), rdd2.srdd());

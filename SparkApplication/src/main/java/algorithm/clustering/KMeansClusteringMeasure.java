@@ -15,18 +15,19 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
     private String dataSetFileName;
 
-    public KMeansClusteringMeasure(JavaSparkContext sc) {
-        super(sc);
+    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter) {
+        super(sc, nbIter);
     }
 
 
 
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters) {
-        this(sc);
+    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters) {
+        this(sc, nbIter);
         this.nbClusters = nbClusters;
     }
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters, Integer nbIterations){
-        this(sc, nbClusters);
+
+    public KMeansClusteringMeasure(JavaSparkContext sc,Integer nbIter, Integer nbClusters, Integer nbIterations){
+        this(sc, nbIter,nbClusters);
         this.nbIterations = nbIterations;
         System.out.println("FILE PATH = " + datasetFileName());
 

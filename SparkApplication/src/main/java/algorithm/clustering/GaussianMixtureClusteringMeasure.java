@@ -12,13 +12,13 @@ public class GaussianMixtureClusteringMeasure extends ClusteringAlgorithmMeasure
     private Integer nbClusters = 10;
     private org.apache.spark.mllib.clustering.GaussianMixtureModel gaussianMixtureClusters;
 
-    public GaussianMixtureClusteringMeasure(JavaSparkContext sc) {
-        super(sc);
+    public GaussianMixtureClusteringMeasure(JavaSparkContext sc, Integer nbIter) {
+        super(sc, nbIter);
     }
 
 
-    public GaussianMixtureClusteringMeasure(JavaSparkContext sc, Integer nbClusters) {
-        this(sc);
+    public GaussianMixtureClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters) {
+        this(sc, nbIter);
         this.nbClusters = nbClusters;
     }
 
