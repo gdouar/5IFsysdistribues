@@ -16,13 +16,14 @@ public class GaussianMixtureClusteringMeasure extends ClusteringAlgorithmMeasure
         super(sc);
     }
 
+
     public GaussianMixtureClusteringMeasure(JavaSparkContext sc, Integer nbClusters) {
         this(sc);
         this.nbClusters = nbClusters;
     }
 
     @Override
-    protected void executeCore() {
+    protected void executeCore(double n) {
         JavaRDD<Vector> parsedData = this.getParsedData();
         this.gaussianMixtureClusters = new GaussianMixture().setK(this.nbClusters).run(parsedData.rdd());
     }

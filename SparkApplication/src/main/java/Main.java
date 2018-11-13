@@ -4,6 +4,7 @@ import algorithm.clustering.KMeansClusteringMeasure;
 import algorithm.stats.PearsonCorrelationsMeasure;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -17,35 +18,35 @@ public class Main {
         // Create a Java version of the Spark Context
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");                // limitation du niveau de log
+
         ArrayList<Long> arrayExec = new ArrayList<>();
-      /*  for(int i=1;i<=10;i++){
+        for(int i=1;i<=10;i++){
             SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
         } */
             try {
-                SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
-                // SparkAlgorithmMeasure algo = new PearsonCorrelationsMeasure(sc, 4, 5);
-                Long executionTimeMs = algo.execute();
+                Long executionTimeMs = algo.execute((double)i/10);
+
                 arrayExec.add(executionTimeMs);
-                arrayExec.add( new KMeansClusteringMeasure(sc, 10, 10, "household_power_consumption_small.txt").execute());
-                arrayExec.add( new KMeansClusteringMeasure(sc, 10, 10, "household_power_consumption_medium.txt").execute());
-            } catch (Exception ex) {
+                System.out.println("Average time : " + executionTimeMs+ " ms.");
+            }
+            catch(Exception ex){
                 System.err.println(ex.getMessage());
             }
-
-            System.out.println("Very small dataset average processing time : " + arrayExec.get(0));
-        System.out.println("Small dataset average processing time : " + arrayExec.get(1));
-        System.out.println("Medium dataset average processing time : " + arrayExec.get(2));
-
+        }
    /*     try {
             SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 5);
             Long executionTimeMs = algo.execute();
             arrayExec.add(executionTimeMs);
             System.out.println("Average time : " + executionTimeMs+ " ms.");
+            System.out.println("Average time : " + algo.execute() + " ms.");
         }
         catch(Exception ex){
             System.err.println(ex.getMessage());
-        } */
+                } */
         //System.out.println
-    }
+
+
+        }
+
 
 }
