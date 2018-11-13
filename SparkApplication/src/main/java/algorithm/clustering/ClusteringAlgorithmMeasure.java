@@ -32,14 +32,14 @@ public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
         return parsedData;
     }
     @Override
-    protected abstract void executeCore();
+    protected abstract void executeCore(double n);
 
     @Override
     protected abstract void printResults() throws Exception;
 
     @Override
     public String datasetFileName() {
-        return "src/main/resources/household_power_consumption_VerySmall.txt";
+        return "C:\\Users\\Thomas\\IdeaProjects\\SparkApplication\\src\\main\\resources\\household_power_consumption_VerySmall.txt";
     }
 
     @Override

@@ -10,13 +10,17 @@ import org.apache.spark.mllib.linalg.Vector;
  */
 public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     private Integer nbClusters = 10;
-    private Integer nbIterations = 5;
+    private Integer nbIterations = 10;
+
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
 
 
     public KMeansClusteringMeasure(JavaSparkContext sc) {
         super(sc);
     }
+
+
+
     public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters) {
         this(sc);
         this.nbClusters = nbClusters;
@@ -24,11 +28,11 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters, Integer nbIterations){
         this(sc, nbClusters);
         this.nbIterations = nbIterations;
-
     }
     @Override
-    protected void executeCore() {
+    protected void executeCore(double n) { //n is the length of the sub dataset
         JavaRDD<Vector> parsedData = this.getParsedData();
+        parsedData = jsc.parallelize(parsedData.take((int)(n*parsedData.count())));
         this.kmeansClusters = KMeans.train(parsedData.rdd(), this.nbClusters, this.nbIterations);
     }
 
@@ -42,10 +46,6 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         System.out.println("Cost: " + cost); */
     }
 
-    @Override
-    public String datasetFileName() {
-        return "src/main/resources/household_power_consumption_VerySmall.txt";
-    }
 
     @Override
     protected void persistResults() throws Exception {

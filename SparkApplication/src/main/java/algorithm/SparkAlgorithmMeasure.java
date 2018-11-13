@@ -9,7 +9,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 public abstract class SparkAlgorithmMeasure {
     /** Le RDD du fichier */
     private JavaRDD<String> textFile;
-    public static final Integer NB_ITER = 50;
+    public static Integer NB_ITER = 50;
     protected  JavaSparkContext jsc;
     public SparkAlgorithmMeasure(JavaSparkContext sc){
         this.jsc = sc;
@@ -20,11 +20,11 @@ public abstract class SparkAlgorithmMeasure {
      * Exécution de l'algorithme
      * @return la durée d'exécution moyenne en ms sur NB_ITER itérations
      */
-    public Long execute() throws Exception {
+    public Long execute(double n) throws Exception {
         long startTime = System.currentTimeMillis();
         System.out.println("Start = " + startTime);
         for(int i = 0;i<NB_ITER;i++) {
-            executeCore();
+            executeCore(n);
            // printResults();
             //  persistResults();
         }
@@ -33,7 +33,7 @@ public abstract class SparkAlgorithmMeasure {
         return (stopTime - startTime) / NB_ITER;
     }
 
-    protected abstract void executeCore();
+    protected abstract void executeCore(double n);
     /** Affichage des résultats */
     protected abstract void printResults() throws Exception;
     /** Le dataset utilisé par l'algorithme*/

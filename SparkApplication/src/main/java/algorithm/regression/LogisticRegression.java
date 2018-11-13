@@ -12,7 +12,7 @@ public class LogisticRegression extends SparkAlgorithmMeasure {
     }
 
     @Override
-    protected void executeCore() {
+    protected void executeCore(double n) {
         /*result = this.getTextFile()
                 .flatMap(s -> Arrays.asList(s.split("[ ,]")).iterator())
                 .mapToPair(word -> new Tuple2<>(word, 1))
