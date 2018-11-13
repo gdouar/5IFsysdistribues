@@ -23,7 +23,7 @@ public class GaussianMixtureClusteringMeasure extends ClusteringAlgorithmMeasure
     }
 
     @Override
-    protected void executeCore(double n) {
+    protected void executeCore() {
         JavaRDD<Vector> parsedData = this.getParsedData();
         this.gaussianMixtureClusters = new GaussianMixture().setK(this.nbClusters).run(parsedData.rdd());
     }

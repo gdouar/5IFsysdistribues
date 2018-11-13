@@ -21,14 +21,14 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");                // limitation du niveau de log
         ArrayList<Pair<String,Pair<Integer, Long>>> arrayExec = new ArrayList<>();
-        String files[] = {"household_power_consumption_VerySmall.txt" };/*, "household_power_consumption_small.txt"};  , "household_power_consumption_medium.txt",
-                             "household_power_consumption_big.txt", "household_power_consumption_very_big.txt"}; */
+        String files[] = {"household_power_consumption_VerySmall.txt" , "household_power_consumption_small.txt" , "household_power_consumption_medium.txt",
+                             "household_power_consumption_big.txt" /*, "household_power_consumption_very_big.txt" */};
         for(int j=0;j<files.length;j++) {
             for (int i = 1; i <= 10; i++) {
-                SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10, 10, files[j]);
+                Double percentage = (double) i / 10;
+                SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 1000, 10, 10, files[j], percentage);
                 try {
-                    Double percentage = (double) i / 10;
-                    Long executionTimeMs = algo.execute(percentage);
+                    Long executionTimeMs = algo.execute();
                     arrayExec.add(new MutablePair<>(files[j], new MutablePair<>(i * 10, executionTimeMs)));
                     System.out.println("Average time for " + (double) i * 10 + "% of dataset " + files[j] + ": " + executionTimeMs + " ms.");
                 } catch (Exception ex) {

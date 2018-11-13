@@ -34,7 +34,7 @@ public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
         return new StandardScaler(true,  true).fit(parsedData.rdd()).transform(parsedData);
     }
     @Override
-    protected abstract void executeCore(double n);
+    protected abstract void executeCore();
 
     @Override
     protected abstract void printResults() throws Exception;

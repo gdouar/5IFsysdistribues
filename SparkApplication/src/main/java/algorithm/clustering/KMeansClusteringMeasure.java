@@ -4,6 +4,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.mllib.clustering.KMeans;
 import org.apache.spark.mllib.linalg.Vector;
+import org.apache.spark.rdd.RDD;
 
 /**
  * Évaluation de la librairie de clustering KMeans de Spark
@@ -14,7 +15,7 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
 
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
     private String dataSetFileName;
-
+    private RDD<Vector> rdd;
     public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter) {
         super(sc, nbIter);
     }
@@ -26,25 +27,19 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         this.nbClusters = nbClusters;
     }
 
-    public KMeansClusteringMeasure(JavaSparkContext sc,Integer nbIter, Integer nbClusters, Integer nbIterations){
-        this(sc, nbIter,nbClusters);
-        this.nbIterations = nbIterations;
-        System.out.println("FILE PATH = " + datasetFileName());
-
-    }
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName){
+    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName, double n){
         this(sc, nbIter, nbClusters);
         this.nbIterations = nbIterations;
         this.dataSetFileName = datasetFileName;
         System.out.println("FILE PATH = " + datasetFileName());
         this.setTextFile(sc.textFile(getDatasetFilePath()));
+        JavaRDD<Vector> parsedData = this.getParsedData();
+        this.rdd = jsc.parallelize(parsedData.take((int)(n*parsedData.count()))).rdd();
     }
 
     @Override
-    protected void executeCore(double n) { //n is the length of the sub dataset
-        JavaRDD<Vector> parsedData = this.getParsedData();
-        parsedData = jsc.parallelize(parsedData.take((int)(n*parsedData.count())));
-        this.kmeansClusters = KMeans.train(parsedData.rdd(), this.nbClusters, this.nbIterations);
+    protected void executeCore() { //n is the length of the sub dataset
+        this.kmeansClusters = KMeans.train(this.rdd, this.nbClusters, this.nbIterations);
     }
 
     @Override

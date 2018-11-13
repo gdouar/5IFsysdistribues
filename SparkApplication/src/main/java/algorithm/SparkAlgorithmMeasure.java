@@ -25,20 +25,21 @@ public abstract class SparkAlgorithmMeasure {
      * Exécution de l'algorithme
      * @return la durée d'exécution moyenne en ms sur NB_ITER itérations
      */
-    public Long execute(double n) throws Exception {
+    public Long execute() throws Exception {
         long startTime = System.currentTimeMillis();
         System.out.println("Start = " + startTime);
         for(int i = 0;i<nbIter;i++) {
-            executeCore(n);
+            executeCore();
            // printResults();
             //  persistResults();
+            System.out.println("finished : " + i);
         }
         long stopTime = System.currentTimeMillis();
         System.out.println("Stop = " + stopTime);
         return (stopTime - startTime) / nbIter;
     }
 
-    protected abstract void executeCore(double n);
+    protected abstract void executeCore();
     /** Affichage des résultats */
     protected abstract void printResults() throws Exception;
     /** Le dataset utilisé par l'algorithme*/
