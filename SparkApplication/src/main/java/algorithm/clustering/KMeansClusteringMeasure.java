@@ -46,7 +46,6 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         System.out.println("Cost: " + cost); */
     }
 
-
     @Override
     protected void persistResults() throws Exception {
         this.kmeansClusters.save(this.jsc.sc(), "tmp/kmeansModel");

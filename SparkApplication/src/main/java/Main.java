@@ -5,6 +5,8 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args){
@@ -21,6 +23,7 @@ public class Main {
             SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
             try {
                 Long executionTimeMs = algo.execute((double)i/10);
+
                 arrayExec.add(executionTimeMs);
                 System.out.println("Average time : " + executionTimeMs+ " ms.");
             }
@@ -40,6 +43,8 @@ public class Main {
                 } */
         //System.out.println
 
-    }
+
+        }
+
 
 }
