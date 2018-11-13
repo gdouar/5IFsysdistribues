@@ -5,9 +5,9 @@ import scala.Tuple2;
 
 import java.util.Arrays;
 
-public class LogisticRegression extends SparkAlgorithmMeasure {
+public class LinearRegressionMeasure extends SparkAlgorithmMeasure {
 
-    public LogisticRegression(JavaSparkContext sc) {
+    public LinearRegressionMeasure(JavaSparkContext sc) {
         super(sc);
     }
 

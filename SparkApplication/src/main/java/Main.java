@@ -21,16 +21,20 @@ public class Main {
       /*  for(int i=1;i<=10;i++){
             SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
         } */
-        try {
-           // SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
-            SparkAlgorithmMeasure algo = new PearsonCorrelationsMeasure(sc, 4, 5);
-            Long executionTimeMs = algo.execute();
-            arrayExec.add(executionTimeMs);
-            System.out.println("Average time : " + executionTimeMs+ " ms.");
-        }
-        catch(Exception ex){
-            System.err.println(ex.getMessage());
-        }
+            try {
+                SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 10);
+                // SparkAlgorithmMeasure algo = new PearsonCorrelationsMeasure(sc, 4, 5);
+                Long executionTimeMs = algo.execute();
+                arrayExec.add(executionTimeMs);
+                arrayExec.add( new KMeansClusteringMeasure(sc, 10, 10, "household_power_consumption_small.txt").execute());
+                arrayExec.add( new KMeansClusteringMeasure(sc, 10, 10, "household_power_consumption_medium.txt").execute());
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+
+            System.out.println("Very small dataset average processing time : " + arrayExec.get(0));
+        System.out.println("Small dataset average processing time : " + arrayExec.get(1));
+        System.out.println("Medium dataset average processing time : " + arrayExec.get(2));
 
    /*     try {
             SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 5);

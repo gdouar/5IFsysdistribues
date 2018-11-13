@@ -12,7 +12,7 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     private Integer nbClusters = 10;
     private Integer nbIterations = 10;
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
-
+    private String dataSetFileName;
 
     public KMeansClusteringMeasure(JavaSparkContext sc) {
         super(sc);
@@ -24,8 +24,17 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters, Integer nbIterations){
         this(sc, nbClusters);
         this.nbIterations = nbIterations;
+        System.out.println("FILE PATH = " + datasetFileName());
 
     }
+    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbClusters, Integer nbIterations, String datasetFileName){
+        this(sc, nbClusters);
+        this.nbIterations = nbIterations;
+        this.dataSetFileName = datasetFileName;
+        System.out.println("FILE PATH = " + datasetFileName());
+        this.setTextFile(sc.textFile(getDatasetFilePath()));
+    }
+
     @Override
     protected void executeCore() {
         JavaRDD<Vector> parsedData = this.getParsedData();
@@ -46,4 +55,10 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     protected void persistResults() throws Exception {
         this.kmeansClusters.save(this.jsc.sc(), "tmp/kmeansModel");
     }
+
+    @Override
+    public String datasetFileName() {
+        return this.dataSetFileName != null ? this.dataSetFileName : super.datasetFileName();
+    }
+
 }

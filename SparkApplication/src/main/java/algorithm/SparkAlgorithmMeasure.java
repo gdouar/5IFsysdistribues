@@ -15,10 +15,11 @@ public abstract class SparkAlgorithmMeasure {
     public SparkAlgorithmMeasure(JavaSparkContext sc){
         this.jsc = sc;
         String filePath = getDatasetFilePath();
-        System.out.println("FILE PATH = " + filePath);
         this.textFile =  sc.textFile(filePath);
+}
+    protected void setTextFile(JavaRDD<String> textFile){
+        this.textFile = textFile;
     }
-
     /**
      * Exécution de l'algorithme
      * @return la durée d'exécution moyenne en ms sur NB_ITER itérations
@@ -43,7 +44,7 @@ public abstract class SparkAlgorithmMeasure {
     public abstract String datasetFileName();
 
     /** NOTE: tout fichier doit être référence dans l'appel à spark-submit */
-    private String getDatasetFilePath(){
+    protected String getDatasetFilePath(){
         return (SparkAppConfig.IS_PROD ? "./"+datasetFileName() : dataSetFilePath() + datasetFileName());
     }
     protected abstract String dataSetFilePath();
