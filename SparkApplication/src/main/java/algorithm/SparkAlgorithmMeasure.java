@@ -30,9 +30,9 @@ public abstract class SparkAlgorithmMeasure {
         System.out.println("Start = " + startTime);
         for(int i = 0;i<nbIter;i++) {
             executeCore();
-           // printResults();
+            printResults();
             //  persistResults();
-            System.out.println("finished : " + i);
+        //    System.out.println(i);
         }
         long stopTime = System.currentTimeMillis();
         System.out.println("Stop = " + stopTime);

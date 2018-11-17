@@ -16,19 +16,14 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
     private String dataSetFileName;
     private RDD<Vector> rdd;
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter) {
+    private KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter) {
         super(sc, nbIter);
     }
 
 
-
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters) {
+    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName, double n){
         this(sc, nbIter);
         this.nbClusters = nbClusters;
-    }
-
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName, double n){
-        this(sc, nbIter, nbClusters);
         this.nbIterations = nbIterations;
         this.dataSetFileName = datasetFileName;
         System.out.println("FILE PATH = " + datasetFileName());
@@ -48,8 +43,6 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         for (Vector center: this.kmeansClusters.clusterCenters()) {
             System.out.println(" " + center);
         }
-   /*     double cost = this.kmeansClusters.computeCost(parsedData.rdd());
-        System.out.println("Cost: " + cost); */
     }
 
     @Override

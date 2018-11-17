@@ -12,22 +12,24 @@ import org.joda.time.format.DateTimeFormat;
 import java.util.Date;
 
 public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
-    public ClusteringAlgorithmMeasure(JavaSparkContext sc, Integer nbIter) {
+    ClusteringAlgorithmMeasure(JavaSparkContext sc, Integer nbIter) {
         super(sc,nbIter);
     }
 
-    protected JavaRDD<Vector> getParsedData(){
+    JavaRDD<Vector> getParsedData(){
         JavaRDD<Vector> parsedData = this.getTextFile().map(s -> {
             String[] sarray = s.split(";");
-            double[] values = new double[sarray.length];
-            values[0] = new Date(sarray[0]).toInstant().toEpochMilli();
-            values[1] = DateTime.parse(sarray[1], DateTimeFormat.forPattern("HH:mm:ss")).getMillisOfDay();
-            for(int i=2;i<sarray.length;i++) {
-                if(sarray[i].equals("?")){
-                    return Vectors.dense(new double[0]);
-                }
-                values[i] = Double.parseDouble(sarray[i]);
+            double[] values = new double[3];
+            values[0] = DateTime.parse(sarray[0] + " " + sarray[1], DateTimeFormat.forPattern("dd/mm/yyyy HH:mm:ss")).getMillis();
+            if(sarray[2].equals("?")){
+                return Vectors.dense(new double[0]);
             }
+            values[1] = Double.parseDouble(sarray[2]);
+            if(sarray[3].equals("?")){
+                return Vectors.dense(new double[0]);
+            }
+            values[2] = Double.parseDouble(sarray[3]);
+
             return Vectors.dense(values);
         }).filter(vector -> vector.size() > 0);         // gestion des outliers
 

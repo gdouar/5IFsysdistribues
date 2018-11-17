@@ -1,5 +1,6 @@
 import algorithm.SparkAlgorithmMeasure;
 import algorithm.clustering.KMeansClusteringMeasure;
+import algorithm.machine_learning.LinearRegressionTrainingDataMeasure;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.spark.SparkConf;
@@ -15,22 +16,22 @@ public class Main {
     public static void main(String[] args){
 
         //Create a SparkContext to initialize
-        SparkConf conf = new SparkConf().setMaster("local").setAppName("SparkTest");
-
+        SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("SparkTest");
         // Create a Java version of the Spark Context
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");                // limitation du niveau de log
         ArrayList<Pair<String,Pair<Integer, Long>>> arrayExec = new ArrayList<>();
-        String files[] = {"household_power_consumption_VerySmall.txt" , "household_power_consumption_small.txt" , "household_power_consumption_medium.txt",
-                             "household_power_consumption_big.txt" /*, "household_power_consumption_very_big.txt" */};
-        for(int j=0;j<files.length;j++) {
+        String files[] = {/*"household_power_consumption_VerySmall.txt" ,*/ "household_power_consumption_small.txt" ,/* "household_power_consumption_medium.txt",
+                             "household_power_consumption_big.txt" /*, "household_power_consumption_very_big.txt" */ };
+        for (String file1 : files) {
             for (int i = 1; i <= 10; i++) {
                 Double percentage = (double) i / 10;
-                SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 1000, 10, 10, files[j], percentage);
+                 SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 100, 6, 5, file1, percentage);
+                //SparkAlgorithmMeasure algo = new LinearRegressionTrainingDataMeasure(sc, 100, 10, file1, 0.5);
                 try {
                     Long executionTimeMs = algo.execute();
-                    arrayExec.add(new MutablePair<>(files[j], new MutablePair<>(i * 10, executionTimeMs)));
-                    System.out.println("Average time for " + (double) i * 10 + "% of dataset " + files[j] + ": " + executionTimeMs + " ms.");
+                    arrayExec.add(new MutablePair<>(file1, new MutablePair<>(i * 10, executionTimeMs)));
+                    System.out.println("Average time for " + (double) i * 10 + "% of dataset " + file1 + ": " + executionTimeMs + " ms.");
                 } catch (Exception ex) {
                     System.err.println(ex.getMessage());
                 }
@@ -38,16 +39,15 @@ public class Main {
         }
         // save performance results
         HashMap<String, String> fileContents = new HashMap<>();
-        for(int j=0;j<arrayExec.size();j++) {
-            String toSave="";
-            Pair<Integer, Long> pair = arrayExec.get(j).getValue();
+        for (Pair<String, Pair<Integer, Long>> anArrayExec : arrayExec) {
+            String toSave = "";
+            Pair<Integer, Long> pair = anArrayExec.getValue();
             toSave += pair.getKey() + "," + pair.getValue();
             toSave += "\n";
-            if(fileContents.containsKey(arrayExec.get(j).getKey())){
-                fileContents.put(arrayExec.get(j).getKey(), fileContents.get(arrayExec.get(j).getKey()) + toSave);
-            }
-            else {
-                fileContents.put(arrayExec.get(j).getKey(), toSave);
+            if (fileContents.containsKey(anArrayExec.getKey())) {
+                fileContents.put(anArrayExec.getKey(), fileContents.get(anArrayExec.getKey()) + toSave);
+            } else {
+                fileContents.put(anArrayExec.getKey(), toSave);
             }
         }
         for(String file : fileContents.keySet()){
