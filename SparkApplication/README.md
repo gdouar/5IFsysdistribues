@@ -1,3 +1,9 @@
+# Les datasets
+Accessibles au lien suivant : https://drive.google.com/drive/folders/144QdA7vOl2vz06MdudA5qfqsE-z6-z3g?usp=sharing
+Ces données sont issues du repository "Household electric power consumption" : https://archive.ics.uci.edu/ml/datasets/individual+household+electric+power+consumption
+
+Il s'agit de la consommation électique d'une maison en France entre 2007 et 2010. 
+Les features sont les suivants : Date, Heure, Puissance active globale, Puissance réactive globale, voltage, intensité globale, ainsi que d'autres métriques spécifiques aux pièces de la maison.
 
 # Installations projet Spark
 
