@@ -29,10 +29,8 @@ public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
                 return Vectors.dense(new double[0]);
             }
             values[2] = Double.parseDouble(sarray[3]);
-
             return Vectors.dense(values);
         }).filter(vector -> vector.size() > 0);         // gestion des outliers
-
         return new StandardScaler(true,  true).fit(parsedData.rdd()).transform(parsedData);
     }
     @Override
@@ -53,4 +51,6 @@ public abstract class ClusteringAlgorithmMeasure extends SparkAlgorithmMeasure {
 
     @Override
     protected abstract void persistResults() throws Exception;
+
+
 }

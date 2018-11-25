@@ -56,4 +56,6 @@ public abstract class SparkAlgorithmMeasure {
     }
 
     protected abstract void persistResults() throws Exception;
+    public abstract Double getPrecision();
+
 }

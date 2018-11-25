@@ -1,5 +1,5 @@
 package conf;
 
 public class SparkAppConfig {
-    public static final boolean IS_PROD = false;
+    public static final boolean IS_PROD = true;
 }

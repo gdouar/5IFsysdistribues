@@ -13,11 +13,13 @@ public class PearsonCorrelationsMeasure extends SparkAlgorithmMeasure{
     private Double correlation;
     private Integer col1;
     private Integer col2;
+    private String dataSetFileName;
 
-    public PearsonCorrelationsMeasure(JavaSparkContext sc, Integer nbIter, Integer col1, Integer col2) {
+    public PearsonCorrelationsMeasure(JavaSparkContext sc, Integer nbIter, Integer col1, Integer col2, String dataSetFileName) {
         super(sc, nbIter);
         this.col1 = col1;
         this.col2 = col2;
+        this.dataSetFileName = dataSetFileName;
     }
 
     //TODO refactor
@@ -43,7 +45,7 @@ public class PearsonCorrelationsMeasure extends SparkAlgorithmMeasure{
 
     @Override
     public String datasetFileName() {
-        return "household_power_consumption_VerySmall.txt";
+        return this.dataSetFileName != null ? this.dataSetFileName : "household_power_consumption_VerySmall.txt";
     }
 
     @Override
@@ -54,5 +56,10 @@ public class PearsonCorrelationsMeasure extends SparkAlgorithmMeasure{
     @Override
     protected void persistResults() throws Exception {
         throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public Double getPrecision() {
+        return null;
     }
 }

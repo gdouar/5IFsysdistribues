@@ -33,7 +33,7 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     }
 
     @Override
-    protected void executeCore() { //n is the length of the sub dataset
+    protected void executeCore() {
         this.kmeansClusters = KMeans.train(this.rdd, this.nbClusters, this.nbIterations);
     }
 
@@ -48,6 +48,13 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
     @Override
     protected void persistResults() throws Exception {
         this.kmeansClusters.save(this.jsc.sc(), "tmp/kmeansModel");
+    }
+
+    @Override
+    public Double getPrecision() {
+        double WSSSE = this.kmeansClusters.computeCost(this.rdd);
+        this.rdd.unpersist(false);
+        return WSSSE;
     }
 
     @Override
