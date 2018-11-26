@@ -3,25 +3,26 @@ package algorithm.clustering;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.mllib.clustering.KMeans;
+import org.apache.spark.mllib.clustering.KMeansModel;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.rdd.RDD;
 
 /**
  * Évaluation de la librairie de clustering KMeans de Spark
  */
-public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
+public class KMeansModelMeasure extends ClusteringAlgorithmMeasure {
     private Integer nbClusters = 10;
     private Integer nbIterations = 10;
 
     private org.apache.spark.mllib.clustering.KMeansModel kmeansClusters;
     private String dataSetFileName;
     private RDD<Vector> rdd;
-    private KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter) {
+    private KMeansModelMeasure(JavaSparkContext sc, Integer nbIter) {
         super(sc, nbIter);
     }
 
 
-    public KMeansClusteringMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName, double n){
+    public KMeansModelMeasure(JavaSparkContext sc, Integer nbIter, Integer nbClusters, Integer nbIterations, String datasetFileName, double n){
         this(sc, nbIter);
         this.nbClusters = nbClusters;
         this.nbIterations = nbIterations;
@@ -43,6 +44,10 @@ public class KMeansClusteringMeasure extends ClusteringAlgorithmMeasure {
         for (Vector center: this.kmeansClusters.clusterCenters()) {
             System.out.println(" " + center);
         }
+    }
+
+    public KMeansModel getKmeansClusters() {
+        return kmeansClusters;
     }
 
     @Override

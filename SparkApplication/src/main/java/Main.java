@@ -1,5 +1,5 @@
 import algorithm.SparkAlgorithmMeasure;
-import algorithm.clustering.KMeansClusteringMeasure;
+import algorithm.clustering.KMeansModelMeasure;
 import conf.SparkAppConfig;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -29,7 +29,7 @@ public class Main {
         for (String file1 : files) {
             for (int i = 1; i <= 10; i++) {
                 Double percentage = (double) i / 10;
-                  SparkAlgorithmMeasure algo = new KMeansClusteringMeasure(sc, 10, 6, 10, file1, percentage);
+                  SparkAlgorithmMeasure algo = new KMeansModelMeasure(sc, 10, 6, 10, file1, percentage);
             //    SparkAlgorithmMeasure algo = new LinearRegressionTrainingDataMeasure(sc, 100, 10, file1, percentage);
                 try {
                     Long executionTimeMs = algo.execute();
